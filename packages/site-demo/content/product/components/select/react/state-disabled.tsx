@@ -9,7 +9,7 @@ const App = ({ theme }) => {
     const LABEL = 'Select label';
 
     const [values, setValues] = React.useState<string[]>([]);
-    const [isOpen, closeSelect, openSelect, toggleSelect] = useBooleanState(false);
+    const [isOpen, closeSelect, toggleSelect] = useBooleanState(false);
 
     const clearSelectedvalues = (event, value) => {
         event.stopPropagation();
@@ -28,7 +28,7 @@ const App = ({ theme }) => {
         <Select
             style={{ width: '100%' }}
             isOpen={isOpen}
-            isValid={true}
+            isDisabled={true}
             value={values}
             onClear={clearSelectedvalues}
             label={LABEL}
