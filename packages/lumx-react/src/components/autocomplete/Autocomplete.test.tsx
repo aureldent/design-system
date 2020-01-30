@@ -4,7 +4,7 @@ import { mount, shallow } from 'enzyme';
 import 'jest-enzyme';
 
 import { List, ListItem, Size } from '@lumx/react';
-import { ICommonSetup, Wrapper, commonTestsSuite } from '@lumx/react/testing/utils';
+import { CommonSetup, Wrapper, commonTestsSuite } from '@lumx/react/testing/utils';
 
 import { Autocomplete, AutocompleteProps, CLASSNAME } from './Autocomplete';
 
@@ -15,19 +15,12 @@ import { CITIES as suggestions } from './__mockData__';
 /**
  * Define the overriding properties expected by the `setup` function.
  */
-type ISetupProps = Partial<AutocompleteProps>;
+type SetupProps = Partial<AutocompleteProps>;
 
 /**
  * Defines what the `setup` function will return.
  */
-interface ISetup extends ICommonSetup {
-    props: ISetupProps;
-
-    /**
-     * The <div> element that holds the autocomplete content.
-     */
-    wrapper: Wrapper;
-
+interface Setup extends CommonSetup<SetupProps> {
     /**
      * Text Field component.
      */
@@ -39,7 +32,7 @@ interface ISetup extends ICommonSetup {
     dropdown: Wrapper;
 }
 
-interface ISuggestion {
+interface Suggestion {
     id: string;
     text: string;
 }
@@ -53,7 +46,7 @@ interface ISuggestion {
  * @param  [shallowRendering=true] Indicates if we want to do a shallow or a full rendering.
  * @return An object with the props, the component wrapper and some shortcut to some element inside of the component.
  */
-const setup = (props: ISetupProps = {}, shallowRendering: boolean = true): ISetup => {
+const setup = (props: SetupProps = {}, shallowRendering: boolean = true): Setup => {
     const renderer: (el: ReactElement) => Wrapper = shallowRendering ? shallow : mount;
 
     // @ts-ignore
@@ -79,7 +72,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
             const { wrapper, textField, dropdown } = setup({
                 children: (
                     <List isClickable>
-                        {suggestions.map((suggestion: ISuggestion) => (
+                        {suggestions.map((suggestion: Suggestion) => (
                             <ListItem size={Size.tiny} key={suggestion.id}>
                                 <div>{suggestion.text}</div>
                             </ListItem>
@@ -106,7 +99,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
     // 2. Test defaultProps value and important props custom values.
     describe('Props', (): void => {
         it('should use default props', (): void => {
-            const { wrapper }: ISetup = setup();
+            const { wrapper }: Setup = setup();
 
             expect(wrapper).toHaveClassName(CLASSNAME);
         });
@@ -115,7 +108,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
             const { wrapper } = setup({
                 children: (
                     <List isClickable>
-                        {suggestions.map((suggestion: ISuggestion) => (
+                        {suggestions.map((suggestion: Suggestion) => (
                             <ListItem size={Size.tiny} key={suggestion.id}>
                                 <div>{suggestion.text}</div>
                             </ListItem>
@@ -143,7 +136,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
             const { textField } = setup({
                 children: (
                     <List isClickable>
-                        {suggestions.map((suggestion: ISuggestion) => (
+                        {suggestions.map((suggestion: Suggestion) => (
                             <ListItem size={Size.tiny} key={suggestion.id}>
                                 <div>{suggestion.text}</div>
                             </ListItem>
@@ -165,7 +158,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
             const { textField } = setup({
                 children: (
                     <List isClickable>
-                        {suggestions.map((suggestion: ISuggestion) => (
+                        {suggestions.map((suggestion: Suggestion) => (
                             <ListItem size={Size.tiny} key={suggestion.id}>
                                 <div>{suggestion.text}</div>
                             </ListItem>
@@ -187,7 +180,7 @@ describe(`<${Autocomplete.displayName}>`, (): void => {
             const { textField } = setup({
                 children: (
                     <List isClickable>
-                        {suggestions.map((suggestion: ISuggestion) => (
+                        {suggestions.map((suggestion: Suggestion) => (
                             <ListItem size={Size.tiny} key={suggestion.id}>
                                 <div>{suggestion.text}</div>
                             </ListItem>

@@ -13,7 +13,7 @@ import { getRootClassName, handleBasicClasses } from '@lumx/react/utils';
 /**
  * Defines the props of the component.
  */
-interface IAutocompleteMultipleProps extends AutocompleteProps {
+interface AutocompleteMultipleProps extends AutocompleteProps {
     /**
      * The list of selected values.
      */
@@ -35,8 +35,12 @@ interface IAutocompleteMultipleProps extends AutocompleteProps {
         onClear?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, choice: object) => void,
         isDisabled?: boolean,
     ): ReactNode | string;
+
+    /**
+     * On clear handler.
+     */
+    onClear?(event: React.FocusEvent): void;
 }
-type AutocompleteMultipleProps = IAutocompleteMultipleProps;
 
 /////////////////////////////
 
@@ -106,7 +110,6 @@ const AutocompleteMultiple: React.FC<AutocompleteMultipleProps> = (props: Autoco
         onBlur,
         onChange,
         onFocus,
-        onKeyDown,
         isOpen,
         closeOnClick,
         closeOnEscape,
@@ -120,7 +123,6 @@ const AutocompleteMultiple: React.FC<AutocompleteMultipleProps> = (props: Autoco
         label,
         placeholder,
         theme,
-        type,
         onClose,
         onClear,
         offset,
@@ -143,7 +145,6 @@ const AutocompleteMultiple: React.FC<AutocompleteMultipleProps> = (props: Autoco
             )}
             value={value}
             onChange={onChange}
-            onKeyDown={onKeyDown}
             onBlur={onBlur}
             shouldFocusOnClose={shouldFocusOnClose}
             onFocus={onFocus}
@@ -162,7 +163,6 @@ const AutocompleteMultiple: React.FC<AutocompleteMultipleProps> = (props: Autoco
             label={label}
             placeholder={placeholder}
             theme={theme}
-            type={type}
             isOpen={isOpen}
             closeOnClick={closeOnClick}
             closeOnEscape={closeOnEscape}
