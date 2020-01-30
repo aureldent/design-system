@@ -111,6 +111,7 @@
         ],
         "valid-typeof": true,
 
+        "interface-name": false,
         "jsx-alignment": true,
         "jsx-ban-elements": [true, []],
         "jsx-ban-props": [true, []],

@@ -4,8 +4,6 @@ import 'jest-enzyme';
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 
-import { IGenericProps } from '@lumx/react/utils';
-
 /////////////////////////////
 //                         //
 //    Public attributes    //
@@ -17,15 +15,20 @@ import { IGenericProps } from '@lumx/react/utils';
  */
 type Wrapper = ShallowWrapper | ReactWrapper;
 
+interface GenericProps {
+    // tslint:disable-next-line: no-any
+    [propName: string]: any;
+}
+
 /**
  * Defines what is always returned by the setup function.
  * Note that `props` should be retyped in the specific interface extending this one.
  */
-interface ICommonSetup {
+interface CommonSetup<P extends GenericProps> {
     /**
      * The properties of the tested component.
      */
-    props: IGenericProps;
+    props: P;
 
     /**
      * The Enzyme wrapper around of the tested component.
@@ -48,10 +51,10 @@ interface ICommonSetup {
  *                          by the `setup` function.
  * @param   params The params that can be used by the tests.
  */
-function commonTestsSuite(
-    setup: (props?: IGenericProps, shallowRendering?: boolean) => ICommonSetup,
+function commonTestsSuite<P extends GenericProps>(
+    setup: (props?: P, shallowRendering?: boolean) => CommonSetup<P>,
     { ...tests }: { className?: string | string[]; prop?: string | string[] },
-    { ...params }: IGenericProps,
+    { ...params },
 ): void {
     if (isEmpty(tests)) {
         return;
@@ -60,11 +63,11 @@ function commonTestsSuite(
     describe('Common tests suite', (): void => {
         if (tests.className !== undefined && !isEmpty(tests.className)) {
             it('should forward any CSS class', (): void => {
-                const modifiedProps: IGenericProps = {
+                const modifiedProps: GenericProps = {
                     className: 'component component--is-tested',
                 };
 
-                const wrappers: ICommonSetup = setup(modifiedProps);
+                const wrappers: CommonSetup<P> = setup(modifiedProps as P);
 
                 const wrappersToTest: string[] = isArray(tests.className)
                     ? tests.className!
@@ -78,11 +81,11 @@ function commonTestsSuite(
         if (tests.prop !== undefined && !isEmpty(tests.prop)) {
             it('should forward any other prop', (): void => {
                 const testedProp: string = params.prop || 'winter';
-                const modifiedProps: IGenericProps = {
+                const modifiedProps = {
                     [testedProp]: params.propValue || 'is coming',
                 };
 
-                const wrappers: ICommonSetup = setup(modifiedProps);
+                const wrappers: CommonSetup<P> = setup(modifiedProps as P);
 
                 const wrappersToTest: string[] = isArray(tests.prop) ? tests.prop! : [tests.prop!];
                 wrappersToTest.forEach((wrapper: string): void => {
@@ -95,4 +98,4 @@ function commonTestsSuite(
 
 /////////////////////////////
 
-export { ICommonSetup, Wrapper, commonTestsSuite };
+export { CommonSetup, Wrapper, commonTestsSuite };

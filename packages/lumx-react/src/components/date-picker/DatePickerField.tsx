@@ -15,8 +15,7 @@ import { useFocus } from '@lumx/react/hooks/useFocus';
 /**
  * Defines the props of the component.
  */
-
-type DatePickerFieldProps = DatePickerProps & {
+interface DatePickerFieldProps extends DatePickerProps {
     /** Whether the text field is clearable. */
     isClearable?: TextFieldProps['isClearable'];
 
@@ -28,7 +27,7 @@ type DatePickerFieldProps = DatePickerProps & {
 
     /** Theme. */
     theme?: Theme;
-};
+}
 
 /////////////////////////////
 

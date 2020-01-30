@@ -17,8 +17,7 @@ import { CLASSNAME, COMPONENT_NAME as COMPONENT_PREFIX, DEFAULT_PROPS, DatePicke
 /**
  * Defines the props of the component.
  */
-
-type DatePickerControlledProps = DatePickerProps & {
+interface DatePickerControlledProps extends DatePickerProps {
     /** Today. */
     today: moment.Moment;
 
@@ -30,7 +29,7 @@ type DatePickerControlledProps = DatePickerProps & {
 
     /** Changing to next month. */
     onNextMonthChange(): void;
-};
+}
 
 /////////////////////////////
 
